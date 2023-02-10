@@ -1,5 +1,5 @@
 import SEO from '../components/SEO';
-import { rollDice } from '../data/core';
+import { cards, rollDice } from '../data/core';
 import { useState, useEffect } from "react";
 import { db } from '../hooks/useSession';
 import { oxford } from '../hooks/useOxford';
@@ -9,8 +9,10 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import PlayerInterface from '../components/PlayerInterface';
 import InternalsList from '../components/InternalsList';
-import { cards } from "../data/core";
-import { Table } from 'react-bootstrap';
+import SessionReport from '../components/SessionReport';
+import StagePlaque from '../components/StagePlaque';
+
+
 
 
 /*
@@ -162,7 +164,6 @@ const  Session = () => {
     };
 
     useEffect(() => {
-        console.log(records)
         /* stage 30 -35 */
         if(stage > 29 && stage < 40){
             if(stage === 30 && attacker?.ship?.name && target?.ship?.name){
@@ -257,14 +258,14 @@ const  Session = () => {
 
     const props = {
         internalsList:{records:records,internals:internals,count:count,clicks:clickEvents},
-        playerInterface:{players:players, click:clickEvents.ship}
+        playerInterface:{players:players, click:clickEvents.ship},
+        sessionReport:{attacker:attacker,target:target,click:clickEvents.close,sessionReport:sessionReport[0]}
     };
 
     return(
         <>
             <SEO title={`Session`}/>
-            <p>Dexie Test</p>
-            <h1>Stage is: {`${stage}`}</h1>
+            <StagePlaque stage={stage} />
             {/* app loaded, let's start */}
             {!isLoading &&
                 <>
@@ -303,60 +304,7 @@ const  Session = () => {
                 }
                 {/* stage is 50 */}
                 {stage > 49 && stage < 60 && !!sessionReport?.length &&
-                    <div className='session-report'>
-                        <h2>Session Report</h2>
-                        <span className='close' onClick={clickEvents.close}>&times;</span>
-                        <p>Attacker, {attacker.ship.name}, made these rolls:</p>
-                        <Table responsive striped bordered variant='dark'>
-                            <tbody>
-                                <tr>
-                                    <td>Total Rolls</td>
-                                    <td>{sessionReport[0].roll.total}</td>
-                                </tr>
-                                <tr>
-                                    <td>Average Roll</td>
-                                    <td>{sessionReport[0].roll.average}</td>
-                                </tr>
-                                <tr>
-                                    <td>Most Rolled</td>
-                                    <td>{oxford.format(sessionReport[0].roll.most)}</td>
-                                </tr>
-                            </tbody>
-                        </Table>
-                        <p>Defender, {target.ship.name}, took these hits:</p>
-                        <Table responsive striped bordered variant='dark'>
-                            <tbody>
-                                <tr>
-                                    <td>Control Hits</td>
-                                    <td>{sessionReport[0].internals.control}</td>
-                                </tr>
-                                <tr>
-                                    <td>Weapon Hits</td>
-                                    <td>{sessionReport[0].internals.weapon}</td>
-                                </tr>
-                                <tr>
-                                    <td>Power Hits</td>
-                                    <td>{sessionReport[0].internals.power}</td>
-                                </tr>
-                                <tr>
-                                    <td>System Hits</td>
-                                    <td>{sessionReport[0].internals.system}</td>
-                                </tr>
-                                <tr>
-                                    <td>Structural Hits</td>
-                                    <td>{sessionReport[0].internals.superstructure}</td>
-                                </tr>
-                                <tr>
-                                    <td>Most Internals Hit</td>
-                                    <td>{oxford.format(sessionReport[0].internals.most)}</td>
-                                </tr>
-                                <tr>
-                                    <td>Obliterated Internals</td>
-                                    <td>{oxford.format(sessionReport[0].internals.obliterated)}</td>
-                                </tr>
-                            </tbody>
-                        </Table>
-                    </div>
+                    <SessionReport {...props.sessionReport}/>
                 }
                 </>
             }

@@ -48,46 +48,53 @@ const  Home = () => {
     return (
         <>
             <SEO />
-
-            <p>Dexie Test</p>
-            <h1>My simple Dexie app</h1>
-
-            {!isLoading && !!(players?.length) &&
-                <>
-                    <p>{(players.length > 1 && enoughShips().qualified)?`looks like you have a session with ${players.length} players: ${oxford.format(players.map((player)=>{ return player.name }))}.`:`It seems you have an incomplete session setup with only ${players.length} player${(players.length !== 1)?`s`:``} and ${enoughShips().number} ship${(enoughShips().number !== 1)?`s`:``}.`}</p>
-
-                    <p>Would you like to continue with this session or start a new one?</p>
-                    <Button
-                        as='button'
-                        variant='outline-secondary'
-                        onClick={handleNewSession}
-                    >
-                        New Session
-                    </Button>
-                    <Button
-                        as='button'
-                        variant='primary'
-                        onClick={handleEditSession}
-                    >
-                        {(players.length > 1 && enoughShips().qualified)?`Continue Session`:`Edit Session`}
-                    </Button>
-                </>
-            }
-            {!isLoading && !(players?.length) &&
-                <>
-                    <p>Start a new session</p>
-                    <Button
-                        as='button'
-                        variant='primary'
-                        onClick={handleNewSession}
-                    >
-                        New Session
-                    </Button>
-                </>
-            }
-            {!!isLoading &&
-                <p>Loading...</p>
-            }
+            <div className='info-form'>
+                {!isLoading && !!(players?.length) &&
+                    <>
+                        {players.length > 1 && enoughShips().qualified && 
+                            <>
+                            <p>Looks like you have a session with {players.length} players:</p>
+                            <ul>
+                                {players.map((player)=>{ return <li key={player.name}>{player.name}</li> })}
+                            </ul>
+                            </>
+                        }
+                        {players.length <= 1 && !enoughShips().qualified &&
+                            <p>It seems you have an incomplete session setup with only {players.length} player${(players.length !== 1)?`s`:``} and {enoughShips().number} ship${(enoughShips().number !== 1)?`s`:``}.`</p>
+                        }
+                        <p>Would you like to continue with this session or start a new one?</p>
+                        <Button
+                            as='button'
+                            variant='outline-secondary'
+                            onClick={handleNewSession}
+                        >
+                            New Session
+                        </Button>
+                        <Button
+                            as='button'
+                            variant='primary'
+                            onClick={handleEditSession}
+                        >
+                            {(players.length > 1 && enoughShips().qualified)?`Continue Session`:`Edit Session`}
+                        </Button>
+                    </>
+                }
+                {!isLoading && !(players?.length) &&
+                    <>
+                        <p>Start a new session</p>
+                        <Button
+                            as='button'
+                            variant='primary'
+                            onClick={handleNewSession}
+                        >
+                            New Session
+                        </Button>
+                    </>
+                }
+                {!!isLoading &&
+                    <p>Loading...</p>
+                }
+            </div>
         </>
     );
 }

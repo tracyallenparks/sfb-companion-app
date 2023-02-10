@@ -1,0 +1,13 @@
+header {
+    background: #000000;
+    color:#ffffff;
+    display: flex;
+    padding: 6px;
+    position: sticky;
+    z-index: 999;
+}
+.header-title {
+    color: #ffffff;
+    font-size: 24px;
+    text-decoration: none;
+}

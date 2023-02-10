@@ -1,0 +1,10 @@
+footer {
+    align-items: center;
+    border-top: 2px solid #ddd;
+    bottom: 0;
+    display: flex;
+    left: 0;
+    padding: 6px;
+    position: fixed;
+    width: 100vw;
+}

@@ -1,0 +1,8 @@
+.session-input-container {
+    display: flex;
+    flex-direction: column;
+}
+.add-player-form {
+    display: flex;
+    gap: 10px;
+}

@@ -7,6 +7,7 @@ import { ButtonEngage } from '../components/ButtonEngage';
 import { useLiveQuery } from "dexie-react-hooks";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import '../css/SessionSetup.css';
 
 const  SessionSetup = ({title}) => {
     const navigate = useNavigate();
@@ -142,8 +143,6 @@ const  SessionSetup = ({title}) => {
             <SEO 
                 title={title}
             />
-
-            <p>Dexie Test</p>
             <h1>{title}</h1>
             <div className="session-input-container">
                 <div className='add-player-form'>

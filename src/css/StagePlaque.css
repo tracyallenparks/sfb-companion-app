@@ -1,0 +1,13 @@
+.stage-plaque {
+    background: #000;
+    border-radius: 50px;
+    bottom: 2rem;
+    box-shadow: 1px 1px 15px rgba(0,0,0,.8);
+    color: #fff;
+    font-weight: bold;
+    padding: 1rem;
+    position: fixed;
+    right: 2rem;
+    text-align: center;
+    z-index: 999;
+}
