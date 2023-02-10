@@ -1,0 +1,39 @@
+/* dice */
+:root {
+    --white: #fff;
+    --dice-background: #ff6347;
+    --dice-shadow: #555555;
+}
+.dice-wrapper {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+.dice {
+    background-color: var(--dice-background);
+    border-radius: 10%;
+    box-shadow: 2px 2px 2px var(--dice-shadow);
+    display: flex;
+    height: 10vh;
+    justify-content: space-between;
+    margin: 1vh;
+    padding: 1vh;
+    width: 10vh;
+}
+.pip-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.pip{
+    background-color: var(--white);
+    border-radius: 50%;
+    display: block;
+    height: 2.5vh;
+    opacity: 0;
+    width: 2.5vh;
+}
+.dice[data-set="1"] .pip-one, .dice[data-set="2"] .pip-two, .dice[data-set="3"] .pip-three, .dice[data-set="4"] .pip-four, .dice[data-set="5"] .pip-five, .dice[data-set="6"] .pip-six {
+    box-shadow: 1px 1px 5px rgb(0 0 0 / 20%);
+    opacity: 1;
+}

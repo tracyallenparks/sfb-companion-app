@@ -1,24 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import { Route, Routes } from 'react-router-dom';
+import Layout from './Layout';
+import Missing from './pages/Missing';
+import Home from './pages/Home';
+import NewSession from './pages/NewSession';
+import EditSession from './pages/EditSession';
+import Session from './pages/Session';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="new-session" element={<NewSession />} />
+          <Route path="edit-session" element={<EditSession />} />
+          <Route path="session" element={<Session />} />
+          <Route path="*" element={<Missing />} />
+      </Route>
+  </Routes>
   );
 }
 
