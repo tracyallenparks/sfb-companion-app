@@ -12,9 +12,6 @@ import InternalsList from '../components/InternalsList';
 import SessionReport from '../components/SessionReport';
 import StagePlaque from '../components/StagePlaque';
 
-
-
-
 /*
     game stages:
         10 - Need Attacker
@@ -112,6 +109,12 @@ const  Session = () => {
         close:() => {
             console.log(`CLOSE`);
             setStage(10);
+            /* reset states */
+            /* handles logic bug where states persist */
+            setDaa(cards)
+            setCount(1)
+            setRecords([])
+            setNone([])
         },
         ship: async (input) => {
             const playerid = parseInt(input.getAttribute('playerid'));
@@ -258,7 +261,7 @@ const  Session = () => {
 
     const props = {
         internalsList:{records:records,internals:internals,count:count,clicks:clickEvents},
-        playerInterface:{players:players, click:clickEvents.ship},
+        playerInterface:{players:players, stage:stage, click:clickEvents.ship},
         sessionReport:{attacker:attacker,target:target,click:clickEvents.close,sessionReport:sessionReport[0]}
     };
 
@@ -289,12 +292,14 @@ const  Session = () => {
                             See Internals
                         </Button>
                     </div>
-    
                 }
+
                 {/* stage is 10 - 35 */}
                 {stage < 40 && !!players?.length &&
+                    
                     <PlayerInterface {...props.playerInterface}/>
                 }
+
                 {/* stage is 40 */}
                 {stage > 39 && stage < 50 &&
                     /*
@@ -302,6 +307,7 @@ const  Session = () => {
                     */
                    <InternalsList {...props.internalsList} />
                 }
+
                 {/* stage is 50 */}
                 {stage > 49 && stage < 60 && !!sessionReport?.length &&
                     <SessionReport {...props.sessionReport}/>

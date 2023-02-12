@@ -2,11 +2,48 @@ import InternalCard from "./InternalCard";
 import { Button } from "react-bootstrap";
 
 const InternalsList = (props) => {
+
+    let droneCount = 0, phaserCount=0, torpedoCount = 0;
+
     return (
     <div className='internals-list'>
         {props.records?.length === props.count &&
             props.records.map((record,index)=>{
-                const cardProps = { index: (index+1), total: record.roll.total, d1: record.roll.d1, d2: record.roll.d2, internal:record.internal};
+                let needThirdRule = false;
+                console.log(index,props.count)
+                if(record.internal.ty === 'weapon' && index+1 === props.count){
+                    console.log(record.internal)
+                    switch(record.internal.nm){
+                        case 'Drone':
+                            console.log('drone')
+                            droneCount++;
+                            if(!(droneCount%3)){
+                                needThirdRule=true;
+                            }
+                            break;
+                        case 'Phaser':
+                            console.log('phaser')
+                            phaserCount++;
+                            if(!(phaserCount%3)){
+                                needThirdRule=true;
+                            }
+                            break;
+                        case 'Torpedo':
+                            console.log('torpedo')
+                            torpedoCount++;
+                            if(!(torpedoCount%3)){
+                                needThirdRule=true;
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                
+                
+
+                const cardProps = { index: (index+1), total: record.roll.total, d1: record.roll.d1, d2: record.roll.d2, internal:record.internal, droneCount:droneCount,phaserCount:phaserCount, torpedoCount:torpedoCount, needThirdRule:needThirdRule};
+
                 return (
                     <div key={`internal-card-${index}`} className="internal-card">
                         <InternalCard {...cardProps} />

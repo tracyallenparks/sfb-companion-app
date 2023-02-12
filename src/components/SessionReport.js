@@ -4,7 +4,7 @@ import { Table } from 'react-bootstrap';
 const SessionReport = (props) => {return(
     <div className='session-report'>
         <h2>Session Report</h2>
-        <span className='close' onClick={props.click.close}>&times;</span>
+        <span className='close' onClick={props.click}>&times;</span>
         <p>Attacker, {props.attacker.ship.name}, made these rolls:</p>
         <Table responsive striped bordered variant='dark'>
             <tbody>
@@ -51,7 +51,14 @@ const SessionReport = (props) => {return(
                 </tr>
                 <tr>
                     <td>Obliterated Internals</td>
-                    <td>{oxford.format(props.sessionReport.internals.obliterated)}</td>
+                    <td>
+                        {typeof props.sessionReport.internals.obliterated === 'object' &&
+                            oxford.format(props.sessionReport.internals.obliterated)
+                        }
+                        {typeof props.sessionReport.internals.obliterated === 'string' &&
+                            props.sessionReport.internals.obliterated
+                        }
+                    </td>
                 </tr>
             </tbody>
         </Table>

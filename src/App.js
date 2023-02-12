@@ -7,17 +7,19 @@ import EditSession from './pages/EditSession';
 import Session from './pages/Session';
 
 function App() {
-  return (
+    return (
     <Routes>
-      <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="new-session" element={<NewSession />} />
-          <Route path="edit-session" element={<EditSession />} />
-          <Route path="session" element={<Session />} />
-          <Route path="*" element={<Missing />} />
-      </Route>
-  </Routes>
-  );
+        <Route element={<Layout />}>
+            <Route path="/" >
+                <Route index element={<Home />} />
+            </Route>
+            <Route path="/new-session" element={<NewSession />} />
+            <Route path="/edit-session" element={<EditSession />} />
+            <Route path="/session" element={<Session />} />
+            <Route path="*" element={<Missing />} />
+        </Route>
+    </Routes>
+    );
 }
 
 export default App;

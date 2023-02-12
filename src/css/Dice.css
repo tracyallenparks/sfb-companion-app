@@ -14,11 +14,10 @@
     border-radius: 10%;
     box-shadow: 2px 2px 2px var(--dice-shadow);
     display: flex;
-    height: 10vh;
+    height: 95px;
     justify-content: space-between;
-    margin: 1vh;
-    padding: 1vh;
-    width: 10vh;
+    padding: 12px;
+    width: 95px;
 }
 .pip-column {
     display: flex;

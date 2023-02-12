@@ -3,8 +3,8 @@ import { db } from '../hooks/useSession';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useLiveQuery } from "dexie-react-hooks";
-import { oxford } from '../hooks/useOxford';
 import Button from 'react-bootstrap/Button';
+import '../css/Home.css';
 
 const  Home = () => {
     const navigate = useNavigate();
@@ -66,6 +66,7 @@ const  Home = () => {
                         <Button
                             as='button'
                             variant='outline-secondary'
+                            className='session-button'
                             onClick={handleNewSession}
                         >
                             New Session
@@ -73,6 +74,7 @@ const  Home = () => {
                         <Button
                             as='button'
                             variant='primary'
+                            className='session-button'
                             onClick={handleEditSession}
                         >
                             {(players.length > 1 && enoughShips().qualified)?`Continue Session`:`Edit Session`}
@@ -85,6 +87,7 @@ const  Home = () => {
                         <Button
                             as='button'
                             variant='primary'
+                            className='session-button'
                             onClick={handleNewSession}
                         >
                             New Session

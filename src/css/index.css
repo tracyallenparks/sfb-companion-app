@@ -17,6 +17,3 @@ code {
     justify-content: center;
     margin: 6px;
 }
-button + button {
-    margin-left: 2rem;
-}

@@ -3,7 +3,7 @@
     gap: 1rem;
     margin: 1rem auto;
 }
-.player-card-input {
+.player-card-input, .player-card, .entity-card {
     background: #000;
     border-radius: 6px;
     border: 1px solid #000000;
@@ -12,6 +12,14 @@
     flex-direction: column;
     margin: 0 1rem;
     padding: 2rem;
+}
+.entity-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.entity-disclaimer {
+    margin: 0 1rem;
 }
 .player-card-input-player {
     display: flex;
