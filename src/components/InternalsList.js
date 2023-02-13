@@ -3,46 +3,36 @@ import { Button } from "react-bootstrap";
 
 const InternalsList = (props) => {
 
-    let droneCount = 0, phaserCount=0, torpedoCount = 0;
-
     return (
     <div className='internals-list'>
         {props.records?.length === props.count &&
             props.records.map((record,index)=>{
-                let needThirdRule = false;
-                console.log(index,props.count)
                 if(record.internal.ty === 'weapon' && index+1 === props.count){
-                    console.log(record.internal)
                     switch(record.internal.nm){
                         case 'Drone':
                             console.log('drone')
-                            droneCount++;
-                            if(!(droneCount%3)){
-                                needThirdRule=true;
-                            }
+                            window.sessionStorage.droneCount = parseInt(window.sessionStorage.droneCount)+1;
                             break;
                         case 'Phaser':
                             console.log('phaser')
-                            phaserCount++;
-                            if(!(phaserCount%3)){
-                                needThirdRule=true;
-                            }
+                            window.sessionStorage.phaserCount = parseInt(window.sessionStorage.phaserCount)+1;
                             break;
                         case 'Torpedo':
                             console.log('torpedo')
-                            torpedoCount++;
-                            if(!(torpedoCount%3)){
-                                needThirdRule=true;
-                            }
+                            window.sessionStorage.torpedoCount = parseInt(window.sessionStorage.torpedoCount)+1;
                             break;
                         default:
                             break;
                     }
+                    if((!(parseInt(window.sessionStorage.droneCount)%3) && parseInt(window.sessionStorage.droneCount) !== 0) ||
+                        (!(parseInt(window.sessionStorage.phaserCount)%3) && parseInt(window.sessionStorage.phaserCount) !== 0) ||
+                        (!(parseInt(window.sessionStorage.torpedoCount)%3) && parseInt(window.sessionStorage.torpedoCount) !== 0)){
+                        record.internal.rot=true;
+                    }
+                    console.log(record.internal)
                 }
-                
-                
 
-                const cardProps = { index: (index+1), total: record.roll.total, d1: record.roll.d1, d2: record.roll.d2, internal:record.internal, droneCount:droneCount,phaserCount:phaserCount, torpedoCount:torpedoCount, needThirdRule:needThirdRule};
+                const cardProps = { index: (index+1), total: record.roll.total, d1: record.roll.d1, d2: record.roll.d2, internal:record.internal};
 
                 return (
                     <div key={`internal-card-${index}`} className="internal-card">

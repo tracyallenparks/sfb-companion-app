@@ -10,6 +10,9 @@
 .internal-card {
     align-items: center;
     border: 1px solid #000000;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    box-shadow: 2px 2px 7px rgb(0 0 0 / 50%);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -17,7 +20,8 @@
     width: 350px;
 }
 .internal-info {
-    height: 300px;
+    min-height: 415px;
+    width: 100%;
 }
 .internal-header {
     background: #000000;
@@ -59,7 +63,14 @@ span.roll-total-number {
     margin-bottom: 6px;
     text-align: center;
 }
-
+.rule-of-three {
+    background: rgba(255,0,0,0.3);
+    border-radius: 6px;
+    border: 1px solid #f00;
+    font-size: 14px;
+    margin: 12px 24px;
+    text-align: center;
+}
 .internal-info-additional {
     font-size: 12px;
     margin-top: 12px;

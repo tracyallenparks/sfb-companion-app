@@ -171,6 +171,9 @@ const  Session = () => {
         if(stage > 29 && stage < 40){
             if(stage === 30 && attacker?.ship?.name && target?.ship?.name){
                 setStage(35);
+                window.sessionStorage.droneCount = 0;
+                window.sessionStorage.phaserCount = 0;
+                window.sessionStorage.torpedoCount = 0;
             }
         }
         /* stage 40 */
@@ -261,8 +264,8 @@ const  Session = () => {
 
     const props = {
         internalsList:{records:records,internals:internals,count:count,clicks:clickEvents},
-        playerInterface:{players:players, stage:stage, click:clickEvents.ship},
-        sessionReport:{attacker:attacker,target:target,click:clickEvents.close,sessionReport:sessionReport[0]}
+        playerInterface:{players, stage, click:clickEvents.ship},
+        sessionReport:{attacker,target,click:clickEvents.close,sessionReport:sessionReport[0]}
     };
 
     return(

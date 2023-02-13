@@ -47,6 +47,12 @@ const InternalCard = (props) => {
             </div>
             <div className="internal-result">
                 <div className="internal-result-name">{props.internal.nm}</div>
+                {!!props?.internal?.rot &&
+                    <div className="rule-of-three">
+                        <div className="rule-of-three-text">Must be <strong>best type</strong></div> 
+                        <div className="rule-of-three-rule">See rule: <span className="rule">D4.322</span> </div>
+                    </div>
+                }
                 {/* place extra info here */}
                 <div className="internal-info-additional">
                 {!!alternateLists?.[props.internal.nm] && 
@@ -68,15 +74,6 @@ const InternalCard = (props) => {
                     </div>
                     }
                 </>
-                }
-
-                {/*((props.internal.nm === 'Drone' && !(props.droneCount%3)) ||
-                (props.internal.nm === 'Phaser' && !(props.phaserCount%3)) ||
-                (props.internal.nm === 'Torpedo' && !(props.torpedoCount%3))) &&
-                    <div className="third-rule">Must be <strong>best type</strong> See rule: (D4.322)</div>
-                */}
-                {!!props?.needThirdRule &&
-                    <div className="third-rule">Must be <strong>best type</strong> See rule: (D4.322)</div>
                 }
                 </div>
             </div>
