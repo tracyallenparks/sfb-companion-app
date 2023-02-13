@@ -83,6 +83,42 @@ const  Session = () => {
         setStage(40)
     }
 
+    const saveReport = () => {
+        const updateShip = async (input) => {
+            try {
+                const playerID = parseInt(input.playerid);
+                const player = await db.players.where('id').equals(playerID).toArray();
+                const currentShips = player[0].ships;
+                const updatedShips = currentShips.map((current)=>{
+                    if(current.name === input.ship.name){
+                        current.internalsTaken = [...current.internalsTaken,...input.ship.internalsTaken];
+                        current.internalsGiven = [...current.internalsGiven,...input.ship.internalsGiven];
+                        current.internalsNone = [...current.internalsNone,...input.ship.internalsNone];
+                        current.rolls = [...current.rolls,...input.ship.rolls];
+                    }
+                    return current;
+                })
+                await db.players.update(playerID,{ships:[...updatedShips]})
+                
+            } catch (error) {
+                console.error(`Failed to add ${input.value}: ${error}`);
+            }
+        }
+
+        const allInternals = records.map(record=>record.internal);
+        const allRolls = records.map(record=>record.roll);
+        if(attacker?.playerid && parseInt(attacker.playerid) !== 1999){
+            attacker.ship.rolls = [...allRolls];
+            attacker.ship.internalsGiven = [...allInternals];
+            updateShip(attacker);
+        }
+        if(target?.playerid && target?.ship){
+            target.ship.internalsNone = [...none];
+            target.ship.internalsTaken = [...allInternals];
+            updateShip(target);
+        }
+    };
+
     const clickEvents = {
         none:(ele) => {
             console.log(`NONE`);
@@ -102,6 +138,7 @@ const  Session = () => {
         report:() => {
             console.log(`REPORT`);
             setStage(50);
+            saveReport();
         },
         edit:() => {
             console.log(`EDIT`);
@@ -186,6 +223,7 @@ const  Session = () => {
         /* stage 50 */
         if(stage > 49 && !!records?.length){
             setSessionReport([compileReport()]);
+            console.log(records)
         }
 
         function findInternal(input){
@@ -202,6 +240,7 @@ const  Session = () => {
             }
             return result;
         }
+
         function updateDAA (roll,col){
             return daa.map((item,index)=>{
                 if(index === roll){
@@ -215,6 +254,7 @@ const  Session = () => {
                 return item;
             })
         }
+
         function compileReport(){
             const allRolls = records.map(record => record.roll.total);
             const allTypes = records.map(record => record.internal.ty)
@@ -263,7 +303,7 @@ const  Session = () => {
     },[stage,attacker,target,count,internals,records,daa,none]);
 
     const props = {
-        internalsList:{records:records,internals:internals,count:count,clicks:clickEvents},
+        internalsList:{records,internals,count,clicks:clickEvents},
         playerInterface:{players, stage, click:clickEvents.ship},
         sessionReport:{attacker,target,click:clickEvents.close,sessionReport:sessionReport[0]}
     };
