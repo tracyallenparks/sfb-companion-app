@@ -96,7 +96,8 @@ const  SessionSetup = ({title}) => {
                             internalsTaken:[],
                             internalsGiven:[],
                             internalsNone:[],
-                            rolls:[]
+                            rolls:[],
+                            status:'active'
                         }
         
                         const playerID = parseInt(input.getAttribute('playerid'));

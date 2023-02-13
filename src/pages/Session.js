@@ -41,7 +41,8 @@ const  Session = () => {
             rolls:[],
             internalsGiven:[],
             internalsTaken:[],
-            internalsNone:[]
+            internalsNone:[],
+            status:'active'
         }
     };
 
@@ -57,7 +58,8 @@ const  Session = () => {
                 rolls:[],
                 internalsGiven:[],
                 internalsTaken:[],
-                internalsNone:[]
+                internalsNone:[],
+                status:'active'
             }
         }
         return ships;
@@ -95,6 +97,7 @@ const  Session = () => {
                         current.internalsGiven = [...current.internalsGiven,...input.ship.internalsGiven];
                         current.internalsNone = [...current.internalsNone,...input.ship.internalsNone];
                         current.rolls = [...current.rolls,...input.ship.rolls];
+                        current.status = input.ship.status;
                     }
                     return current;
                 })
@@ -121,10 +124,17 @@ const  Session = () => {
 
     const clickEvents = {
         none:(ele) => {
-            console.log(`NONE`);
-            setNone([...none,ele.getAttribute('internal')]);
-            const updateRecords = records.filter((record,index)=> index !== records.length-1);
-            setRecords([...updateRecords])
+            if(ele.getAttribute('internal') === 'Excess Damage'){
+                // ship go boom.
+                // set ship.status to 'boom'
+                target.ship.status = 'boom';
+                setStage(50);
+                saveReport();
+            } else {
+                setNone([...none,ele.getAttribute('internal')]);
+                const updateRecords = records.filter((record,index)=> index !== records.length-1);
+                setRecords([...updateRecords])
+            }
         },
         next:() => {
             console.log(`NEXT`);
