@@ -3,6 +3,7 @@ import { cards, rollDice } from '../data/core';
 import { useState, useEffect } from "react";
 import { db } from '../hooks/useSession';
 import { oxford } from '../hooks/useOxford';
+import { average, mostFrequent, quantity } from '../hooks/useFind';
 import { useNavigate } from 'react-router-dom';
 import { useLiveQuery } from "dexie-react-hooks";
 import Form from 'react-bootstrap/Form';
@@ -12,7 +13,6 @@ import InternalsList from '../components/InternalsList';
 import SessionReport from '../components/SessionReport';
 import StagePlaque from '../components/StagePlaque';
 import '../css/Session.css';
-import GameReport from './GameReport';
 
 /*
     game stages:
@@ -285,43 +285,20 @@ const  Session = () => {
             const allTypes = records.map(record => record.internal.ty)
             const result = {
                 roll:{
-                    most:findMostFrequent(allRolls),
-                    average:findAverage(allRolls),
+                    most:mostFrequent(allRolls),
+                    average:average(allRolls),
                     total:allRolls.length
                 },
                 internals:{
-                    control:findNumberOf(allTypes,'control'),
-                    weapon:findNumberOf(allTypes,'weapon'),
-                    power:findNumberOf(allTypes,'power'),
-                    superstructure:findNumberOf(allTypes,'superstructure'),
-                    system:findNumberOf(allTypes,'system'),
-                    most:findMostFrequent(records.map(record=>record.internal.nm)),
+                    control:quantity(allTypes,'control'),
+                    weapon:quantity(allTypes,'weapon'),
+                    power:quantity(allTypes,'power'),
+                    superstructure:quantity(allTypes,'superstructure'),
+                    system:quantity(allTypes,'system'),
+                    most:mostFrequent(records.map(record=>record.internal.nm)),
                     obliterated:(none.length)?oxford.format(none):['none']
                 }
             };
-
-            function findMostFrequent(arr) {
-                const hashmap = arr.reduce( (acc, val) => {
-                    acc[val] = (acc[val] || 0 ) + 1
-                    return acc
-                },{})
-                return Object.keys(hashmap).filter(x => {
-                    return hashmap[x] === Math.max.apply(null,Object.values(hashmap))
-                })
-            }
-
-            function findAverage(arr){
-                let t = 0;
-                for (let i = 0; i < arr.length; i++) {
-                    t += arr[i];
-                }
-                return Number((t/arr.length).toFixed(2));
-            }
-
-            function findNumberOf(arr,locate){
-                const found = arr.filter((item)=>item===locate);
-                return found.length;
-            }
 
             return result;
         };
