@@ -39,9 +39,6 @@ const InternalCard = (props) => {
                 <div className='dice-set'>
                     <Dice props={props.d1} />
                     <Dice props={props.d2} />
-                </div>
-                <div className="roll-total">
-                    <span className="roll-total-text">Roll:</span>
                     <span className="roll-total-number">{props.total}</span>
                 </div>
             </div>

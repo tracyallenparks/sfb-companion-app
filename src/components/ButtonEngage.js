@@ -7,6 +7,7 @@ export function ButtonEngage({props}){
             as='button'
             variant='success'
             onClick={(e)=>{props(e)}}
+            className='button-engage'
         >
             Engage
         </Button>

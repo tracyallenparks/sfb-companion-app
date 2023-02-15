@@ -1,0 +1,19 @@
+.ship-card {
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    border-radius: 6px;
+    color: #000000;
+    cursor: pointer;
+    margin-bottom: 24px;
+    padding: 6px 24px;
+    text-align: center;
+    width: 100%;
+}
+.ship-card[disabled]{
+    background: #aaaaaa;
+    border-color: #aaaaaa;
+    cursor: not-allowed;
+}
+.ship-name[disabled] {
+    text-decoration: line-through;
+}

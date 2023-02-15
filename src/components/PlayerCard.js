@@ -1,4 +1,5 @@
 import { ShipCard } from '../components/ShipCard';
+import '../css/PlayerCard.css';
 
 export function PlayerCard(props) {
     return (
@@ -7,7 +8,7 @@ export function PlayerCard(props) {
             {props.player.ships?.length &&
                 <div className='ship-list'>
                     {props.player.ships.map((ship,index) => {
-                        const shipProps = { key:index, player:props.player, ship:ship, shipid:index, click:props.click };
+                        const shipProps = { key:index, player:props.player, ship, shipid:index, click:props.click };
                         return <ShipCard {...shipProps}/>
                     })}
                 </div>

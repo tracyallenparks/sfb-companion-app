@@ -1,9 +1,12 @@
 .player-list {
+    align-items: flex-start;
     display: flex;
+    flex-wrap: wrap;
     gap: 1rem;
+    justify-content: center;
     margin: 1rem auto;
 }
-.player-card-input, .player-card, .entity-card {
+.player-card-input {
     background: #000;
     border-radius: 6px;
     border: 1px solid #000000;
@@ -19,7 +22,9 @@
     gap: 10px;
 }
 .entity-disclaimer {
-    margin: 0 1rem;
+    font-size: 12px;
+    margin: 50px auto 0;
+    max-width: 80%;
 }
 .player-card-input-player {
     display: flex;

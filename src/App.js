@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import NewSession from './pages/NewSession';
 import EditSession from './pages/EditSession';
 import Session from './pages/Session';
+import GameReport from './pages/GameReport';
 
 function App() {
     return (
@@ -16,6 +17,7 @@ function App() {
             <Route path="/new-session" element={<NewSession />} />
             <Route path="/edit-session" element={<EditSession />} />
             <Route path="/session" element={<Session />} />
+            <Route path="/report" element={<GameReport />} />
             <Route path="*" element={<Missing />} />
         </Route>
     </Routes>

@@ -1,11 +1,16 @@
+.internals-interface {
+    margin: 0 24px;
+    overflow: hidden;
+    width: calc(100% - 28px);
+}
 .internals-list {
     align-items: baseline;
     display: flex;
     flex-direction: row-reverse;
     gap: 2rem;
-    justify-content: left;
-    margin: 0 auto;
-    width: 90vw;
+    /*justify-content: left;*/
+    margin: 0;
+    overflow-x: scroll;
 }
 .internal-card {
     align-items: center;
@@ -17,7 +22,8 @@
     flex-direction: column;
     justify-content: center;
     margin: 2rem 0;
-    width: 350px;
+    width: 250px;
+    min-width: 250px;
 }
 .internal-info {
     min-height: 415px;
@@ -40,16 +46,25 @@
     gap: 18px;
     justify-content: flex-start;
     margin: 12px;
+    position: relative;
 }
-.roll-total {
-    display: flex;
-    flex-direction: column;
+.roll-total-number {
     align-items: center;
-    margin-top: 1vh;
-}
-span.roll-total-number {
-    font-size: 32px;
-    font-weight: bold;
+    border-radius: 50px;
+    display: flex;
+    font-size: 48px;
+    font-weight: 700;
+    justify-content: center;
+    left: 50%;
+    line-height: 1;
+    min-height: 100px;
+    min-width: 100px;
+    padding: .5rem 1rem;
+    position: absolute;
+    text-align: center;
+    text-shadow: 0px 0px 2px #fff;
+    top: 50%;
+    transform: translate(-50%,-50%);
 }
 .internal-result {
     display: flex;
@@ -93,4 +108,8 @@ span.roll-total-number {
     margin: 0 0 24px;
     padding: 0 24px;
     width: 100%;
+}
+/* need to fix edit button later */
+.button-edit {
+    display: none;
 }

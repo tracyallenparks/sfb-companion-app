@@ -1,3 +1,6 @@
+.session-interface {
+    margin: 0 auto;
+}
 .session-input-container {
     display: flex;
     flex-direction: column;
@@ -5,4 +8,14 @@
 .add-player-form {
     display: flex;
     gap: 10px;
+    margin: 12px auto;
+    max-width: 350px;
+}
+input#inputAddPlayer {
+    width: calc(350px - 38px - 10px);
+}
+button.button-engage {
+    max-width: 350px;
+    margin: 12px auto;
+    width: 100%;
 }

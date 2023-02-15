@@ -145,33 +145,34 @@ const  SessionSetup = ({title}) => {
                 title={title}
             />
             <h1>{title}</h1>
-            <div className="session-input-container">
-                <div className='add-player-form'>
-                    <Form.Control
-                        id='inputAddPlayer'
-                        placeholder='Add Player'
-                        onKeyPress={(e) => { if(e.key === 'enter' || e.charCode === 13){ clickEvents.player.add(e.target)}}}
-                    />
-                    <Button
-                        as='button'
-                        variant='outline-dark'
-                        onClick={(e) => clickEvents.player.add(e.target.previousElementSibling)}
-                    >
-                        +
-                    </Button>
-                </div>
-                
-                {!isLoading && !!players?.length &&
-                    <>
-                    <PlayersList {...props.playerList}/>
+            <div className='session-interface'>
+                <div className="session-input-container">
+                    <div className='add-player-form'>
+                        <Form.Control
+                            id='inputAddPlayer'
+                            placeholder='Add Player'
+                            onKeyPress={(e) => { if(e.key === 'enter' || e.charCode === 13){ clickEvents.player.add(e.target)}}}
+                        />
+                        <Button
+                            as='button'
+                            variant='outline-dark'
+                            onClick={(e) => clickEvents.player.add(e.target.previousElementSibling)}
+                        >
+                            +
+                        </Button>
+                    </div>
                     
-                    {players.length > 1 && 
-                        <ButtonEngage props={clickEvents.submit} />
+                    {!isLoading && !!players?.length &&
+                        <>
+                        <PlayersList {...props.playerList}/>
+                        
+                        {players.length > 1 && 
+                            <ButtonEngage props={clickEvents.submit} />
+                        }
+                        </>
                     }
-                    </>
-                }
+                </div>
             </div>
-            
         </>
     );
 }

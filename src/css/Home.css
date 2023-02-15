@@ -1,3 +1,10 @@
-button.session-button + button.session-button {
-    margin-left: 2rem;
+.info-form {
+    display: flex;
+    flex-direction: column;
+    margin: 24px auto 0;
+}
+.button-set {
+    display: flex;
+    gap: 32px;
+    justify-content: center;
 }

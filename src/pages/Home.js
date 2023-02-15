@@ -63,22 +63,24 @@ const  Home = () => {
                             <p>It seems you have an incomplete session setup with only {players.length} player${(players.length !== 1)?`s`:``} and {enoughShips().number} ship${(enoughShips().number !== 1)?`s`:``}.`</p>
                         }
                         <p>Would you like to continue with this session or start a new one?</p>
-                        <Button
-                            as='button'
-                            variant='outline-secondary'
-                            className='session-button'
-                            onClick={handleNewSession}
-                        >
-                            New Session
-                        </Button>
-                        <Button
-                            as='button'
-                            variant='primary'
-                            className='session-button'
-                            onClick={handleEditSession}
-                        >
-                            {(players.length > 1 && enoughShips().qualified)?`Continue Session`:`Edit Session`}
-                        </Button>
+                        <div className='button-set'>
+                            <Button
+                                as='button'
+                                variant='outline-secondary'
+                                className='session-button'
+                                onClick={handleNewSession}
+                            >
+                                New Session
+                            </Button>
+                            <Button
+                                as='button'
+                                variant='primary'
+                                className='session-button'
+                                onClick={handleEditSession}
+                            >
+                                {(players.length > 1 && enoughShips().qualified)?`Continue Session`:`Edit Session`}
+                            </Button>
+                        </div>
                     </>
                 }
                 {!isLoading && !(players?.length) &&

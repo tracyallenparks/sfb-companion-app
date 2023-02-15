@@ -3,7 +3,7 @@ import { cards, rollDice } from '../data/core';
 import { useState, useEffect } from "react";
 import { db } from '../hooks/useSession';
 import { oxford } from '../hooks/useOxford';
-//import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useLiveQuery } from "dexie-react-hooks";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -11,6 +11,8 @@ import PlayerInterface from '../components/PlayerInterface';
 import InternalsList from '../components/InternalsList';
 import SessionReport from '../components/SessionReport';
 import StagePlaque from '../components/StagePlaque';
+import '../css/Session.css';
+import GameReport from './GameReport';
 
 /*
     game stages:
@@ -24,7 +26,7 @@ import StagePlaque from '../components/StagePlaque';
 */
 
 const  Session = () => {
-    //const navigate = useNavigate();
+    let navigate = useNavigate();
     const players = useLiveQuery(
         async () => {
             const players = await db.players
@@ -163,11 +165,24 @@ const  Session = () => {
             setRecords([])
             setNone([])
         },
+        exitInternals:() => {
+            //ask to save?
+            //saveReport();
+            //else...
+
+            setStage(10);
+            /* reset states */
+            /* handles logic bug where states persist */
+            setDaa(cards)
+            setCount(1)
+            setRecords([])
+            setNone([])
+        },
         ship: async (input) => {
             const playerid = parseInt(input.getAttribute('playerid'));
             const shipid = parseInt(input.getAttribute('shipid'));
-            if(!input.getAttribute('disabled')){
-                input.setAttribute('disabled',true);
+            if(!input.getAttribute('selected')){
+                input.setAttribute('selected',true);
                 const shipInfo = await getShipInfo([playerid,shipid]);
                 if(stage < 20){
                     let updateAttacker = {
@@ -208,7 +223,7 @@ const  Session = () => {
                     setStage(10);
                 }
                 input.className = 'ship-card';
-                input.removeAttribute('disabled');
+                input.removeAttribute('selected');
             }
         }
     };
@@ -323,34 +338,65 @@ const  Session = () => {
             <SEO title={`Session`}/>
             <StagePlaque stage={stage} />
             {/* app loaded, let's start */}
+            <h1>
+                {stage < 21 &&
+                    <>Select {((stage === 10)?`Attacker`:`Defender`)}</>
+                }
+                {stage > 20 && stage < 40 &&
+                    <>Enter Number of Internals</>
+                }
+            </h1>
+            {stage < 40 && !!players?.length &&
+                <Button 
+                    as='button'
+                    variant='link'
+                    className='internals-exit'
+                    onClick={() => navigate('/report')}
+                >
+                    Game Report
+                </Button>
+            }
+            {stage > 39 && stage < 50 &&
+                <Button 
+                    as='button'
+                    variant='link'
+                    className='internals-exit'
+                    onClick={clickEvents.exitInternals}
+                >
+                    Exit
+                </Button>
+            }
+            <div className='internals-interface'>
             {!isLoading &&
                 <>
-                {/* stage is 30 */}
-                {stage > 29 && stage < 40 && attacker?.ship?.name && target?.ship?.name &&
-                    <div className='damage-input'>
-                        <p><span className='damage-input-name attacker-name'>{attacker?.ship?.name}</span> is attacking <span className='damage-input-name target-name'>{target?.ship?.name}</span></p>
-                        <Form.Control
-                            id='total-damage'
-                            tabIndex={-1}
-                            autoFocus={true}
-                            type='number'
-                            placeholder='Number of Internals Inflicted on Target'
-                            onKeyPress={(e) => { if(e.key === 'enter' || e.charCode === 13){ handleDamage(e.target)}}}
-                        />
-                        <Button
-                            as='button'
-                            variant='danger'
-                            onClick={(e) => handleDamage(e.target.previousElementSibling)}
-                        >
-                            See Internals
-                        </Button>
-                    </div>
-                }
-
                 {/* stage is 10 - 35 */}
                 {stage < 40 && !!players?.length &&
                     
                     <PlayerInterface {...props.playerInterface}/>
+                }
+                
+                {/* stage is 30 */}
+                {stage > 29 && stage < 40 && attacker?.ship?.name && target?.ship?.name &&
+                    <div className='damage-input'>
+                        <p><span className='damage-input-name attacker-name'>{attacker?.ship?.name}</span> is attacking <span className='damage-input-name target-name'>{target?.ship?.name}</span></p>
+                        <div className='internal-input-form'>
+                            <Form.Control
+                                id='total-damage'
+                                tabIndex={-1}
+                                autoFocus={true}
+                                type='number'
+                                placeholder='Number of Internals'
+                                onKeyPress={(e) => { if(e.key === 'enter' || e.charCode === 13){ handleDamage(e.target)}}}
+                            />
+                            <Button
+                                as='button'
+                                variant='danger'
+                                onClick={(e) => handleDamage(e.target.previousElementSibling)}
+                            >
+                                See Internals
+                            </Button>
+                        </div>
+                    </div>
                 }
 
                 {/* stage is 40 */}
@@ -371,6 +417,7 @@ const  Session = () => {
             {!!isLoading && 
                 <p>App Loading...</p>
             }
+            </div>
         </>
     );
 };

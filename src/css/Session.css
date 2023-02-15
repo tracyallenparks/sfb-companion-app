@@ -1,0 +1,51 @@
+.damage-input {
+    display: flex;
+    flex-direction: column;
+    margin: 12px auto;
+}
+.internal-input-form {
+    align-items: center;
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+.internal-input-form input {
+    width: 200px;
+}
+.internal-input-form button.btn.btn-danger {
+    width: max-content;
+}
+.ship-card{
+    position: relative;
+}
+.ship-card.session-attacker {
+    border-color: #f00;
+    box-shadow: 0px 0px 20px #f00;
+}
+.ship-card.session-target {
+    border-color: #04d9ff;
+    box-shadow: 0px 0px 20px #04d9ff;
+}
+.ship-card[selected]:after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 6px;
+    opacity: .25;
+}
+.ship-card.session-attacker:after {
+    background: #f00;
+}
+.ship-card.session-target:after {
+    background: #04d9ff;
+}
+.damage-input p {
+    font-size: 18px;
+    font-style: italic;
+    text-align: center;
+}

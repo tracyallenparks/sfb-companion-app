@@ -10,15 +10,12 @@ const InternalsList = (props) => {
                 if(record.internal.ty === 'weapon' && index+1 === props.count){
                     switch(record.internal.nm){
                         case 'Drone':
-                            console.log('drone')
                             window.sessionStorage.droneCount = parseInt(window.sessionStorage.droneCount)+1;
                             break;
                         case 'Phaser':
-                            console.log('phaser')
                             window.sessionStorage.phaserCount = parseInt(window.sessionStorage.phaserCount)+1;
                             break;
                         case 'Torpedo':
-                            console.log('torpedo')
                             window.sessionStorage.torpedoCount = parseInt(window.sessionStorage.torpedoCount)+1;
                             break;
                         default:
@@ -29,7 +26,6 @@ const InternalsList = (props) => {
                         (!(parseInt(window.sessionStorage.torpedoCount)%3) && parseInt(window.sessionStorage.torpedoCount) !== 0)){
                         record.internal.rot=true;
                     }
-                    console.log(record.internal)
                 }
 
                 const cardProps = { index: (index+1), total: record.roll.total, d1: record.roll.d1, d2: record.roll.d2, internal:record.internal};
@@ -58,6 +54,7 @@ const InternalsList = (props) => {
                                         as="button"
                                         variant="primary"
                                         onClick={props.clicks.report}
+                                        autoFocus={true}
                                     >
                                         Damage Report
                                     </Button>
@@ -80,6 +77,7 @@ const InternalsList = (props) => {
                                         as="button"
                                         variant="success"
                                         onClick={props.clicks.next}
+                                        autoFocus={true}
                                     >
                                         Next
                                     </Button>

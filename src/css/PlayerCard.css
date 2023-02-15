@@ -1,0 +1,25 @@
+.player-card, .entity-card {
+    align-items: center;
+    background: #000000;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    width: 250px;
+}
+.entity-card {
+    justify-content: center;
+}
+.player-name {
+    font-size: 24px;
+}
+.player-card:not(.entity-card) .player-name {
+    border-bottom: 1px solid #cccccc;
+    margin-bottom: 12px;
+    text-align: center;
+    width: 100%;
+}
+.ship-list {
+    margin-top: 12px;
+    width: 100%;
+}
