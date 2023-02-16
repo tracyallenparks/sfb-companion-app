@@ -1,5 +1,6 @@
 footer {
     align-items: center;
+    background-color: #ffffff;
     border-top: 2px solid #ddd;
     bottom: 0;
     display: flex;
@@ -7,4 +8,5 @@ footer {
     padding: 6px;
     position: fixed;
     width: 100vw;
+    z-index: 999;
 }

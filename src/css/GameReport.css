@@ -1,0 +1,20 @@
+h4.game-report-ship {
+    border-top: 1px solid #aaa;
+    margin-top: 12px;
+    padding-top: 6px;
+}
+.report-columns {
+    column-count: 2;
+}
+thead {
+    font-size: 18px;
+    font-weight: 700;
+}
+thead, td {
+    text-transform: capitalize;
+}
+@media screen and (max-width: 768px) {
+    .report-columns {
+        column-count: 1;
+    }
+}
