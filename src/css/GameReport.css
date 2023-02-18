@@ -10,8 +10,33 @@ thead {
     font-size: 18px;
     font-weight: 700;
 }
-thead, td {
+thead tr, tbody tr td:first-of-type {
     text-transform: capitalize;
+}
+td.breakdown-header {
+    text-align: center;
+    font-style: italic;
+    text-decoration: underline;
+}
+td.total {
+    text-align: center;
+}
+td.percent {
+    position: relative;
+    text-align: right;
+    text-shadow: 0px 0px 1px black
+}
+.percent-progress {
+    background: #ddd;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+}
+.close-report {
+    width: max-content;
+    padding: 6px 24px;
+    margin: 24px auto 0;
 }
 @media screen and (max-width: 768px) {
     .report-columns {

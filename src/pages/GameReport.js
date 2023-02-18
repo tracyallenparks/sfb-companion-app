@@ -1,13 +1,17 @@
 import SEO from '../components/SEO';
+import GameReportSection from '../components/GameReportSection';
 import { useState } from 'react';
 import { db } from '../hooks/useSession';
-import { oxford } from '../hooks/useOxford';
+
 import { average, mostFrequent } from '../hooks/useFind';
 import { useLiveQuery } from "dexie-react-hooks";
-import { Button, Table } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import '../css/GameReport.css';
 
 const GameReport = () => {
+    const navigate = useNavigate();
+
     const players = useLiveQuery(
         async () => {
             const players = await db.players
@@ -30,6 +34,7 @@ const GameReport = () => {
                 }
                 const result = {
                     ship:ship.name,
+                    score:0,
                     rolls:{
                         most:mostFrequent(rolls),
                         average:(!isNaN(average(rolls)))?average(rolls):'none',
@@ -49,21 +54,38 @@ const GameReport = () => {
                     }
                 };
 
-                Object.keys(internals).forEach(key => {
-                    if(internals[key].length){
-                        internals[key].forEach((item)=>{
-                            if(!result.internals[key].type[item.ty]){
-                                result.internals[key].type[item.ty] = {count: 1};
+                Object.keys(internals).forEach(gt => {
+                    if(internals[gt].length){
+                        internals[gt].forEach((item)=>{
+                            if(!result.internals[gt].type[item.ty]){
+                                result.internals[gt].type[item.ty] = {count: 1};
                             } else {
-                                result.internals[key].type[item.ty].count++
+                                result.internals[gt].type[item.ty].count++
                             }
-                            if(!result.internals[key].name[item.nm]){
-                                result.internals[key].name[item.nm] = {count: 1};
+                            if(!result.internals[gt].name[item.nm]){
+                                result.internals[gt].name[item.nm] = {count: 1};
                             } else {
-                                result.internals[key].name[item.nm].count++
+                                result.internals[gt].name[item.nm].count++
                             }
-                            result.internals[key].type[item.ty].percent = (result.internals[key].type[item.ty].count/result.internals[key].total)*100
-                            result.internals[key].name[item.nm].percent = (result.internals[key].name[item.nm].count/result.internals[key].total)*100
+                            if(gt === 'given'){
+                                switch(item.ty){
+                                    case 'weapon':
+                                        result.score = result.score + 3;
+                                        break;
+                                    case 'power':
+                                        result.score = result.score + 2;
+                                        break;
+                                    case 'system':
+                                    case 'control':
+                                        result.score = result.score + 1;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+
+                            result.internals[gt].type[item.ty].percent = (((result.internals[gt].type[item.ty].count/result.internals[gt].total)*100).toFixed(2));
+                            result.internals[gt].name[item.nm].percent = (((result.internals[gt].name[item.nm].count/result.internals[gt].total)*100).toFixed(2));
                         })
                     }
                 })
@@ -73,6 +95,8 @@ const GameReport = () => {
         return report;
     };
 
+    const config_props = {};
+
     return(
         <>
         <SEO title='Game Report'/>
@@ -81,71 +105,25 @@ const GameReport = () => {
         }
         {!isLoading && !!players?.length &&
             <>
-            <h1>Game Report:</h1>
+            <h1 key={`game-report-h1`}>Game Report:</h1>
             {!!compileReport()?.length &&
-            compileReport().map(item => {
+            compileReport().map((item,i) => {
+                config_props.item = item;
+                config_props.index = i
                 return (
-                    <section key={item.ship}>
-                        <h4 className='game-report-ship'>{item.ship}</h4>
-                        <div className='report-columns'>
-                            <Table responsive striped bordered variant='dark'>
-                                <tbody>
-                                    <tr>
-                                        <td>Total Rolls</td>
-                                        <td>{item.rolls.total}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Average Roll</td>
-                                        <td>{item.rolls.average}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Most Rolled</td>
-                                        <td>
-                                            {!item.rolls.most?.length && `none`}
-                                            {!!item.rolls.most?.length && oxford.format(item.rolls.most)}
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </Table>
-                            {
-                                Object.keys(item.internals).map(key => {return(
-                                    //given,taken
-                                    <>
-                                    {!!item.internals[key]?.total &&
-                                        <Table key={`${item.ship}-${key}`} responsive striped bordered variant='dark'>
-                                            <thead>
-                                                <tr>
-                                                    <td>Internals {key}</td>
-                                                    <td>Total</td>
-                                                    <td>Percent</td>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            {
-                                                Object.keys(item.internals[key]).map(key2 => {
-                                                //name,type
-                                                return (
-                                                    Object.keys(item.internals[key][key2]).map(key3 => {return (
-                                                        <tr key={`${item.ship}-${key3}`}>
-                                                            <td>{key3}</td>
-                                                            <td>{item.internals[key][key2][key3].count}</td>
-                                                            <td>{item.internals[key][key2][key3].percent}%</td>
-                                                        </tr>
-                                                    )})
-                                                )})
-                                            }
-                                            </tbody>
-                                        </Table>
-                                    }
-                                    </>
-                                )})
-                            }
-                        </div>
-                    </section>
+                    <GameReportSection key={`section-${i}`} { ...config_props }/>
                 )
-            })}
-            <Button>
-                Close Report
+            })
+            }
+            <Button
+                className='close-report'
+                as='button'
+                variant='info'
+                onClick={()=>{
+                    navigate('/ ')
+                }}
+            >
+                Close Report 
             </Button>
             </>
         }

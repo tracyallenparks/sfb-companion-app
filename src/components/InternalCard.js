@@ -10,6 +10,9 @@ const InternalCard = (props) => {
             rule:'D4.351',
             disclaimer:'*if no other hull of type present.'
         },
+        'APR':{
+            list:['AWR']
+        },
         'Drone':{
             list:['ADD','Drone Rack','ESG','Hellbore','PA Panel','PPD','Web Caster']
         },
