@@ -11,7 +11,6 @@ import Button from 'react-bootstrap/Button';
 import PlayerInterface from '../components/PlayerInterface';
 import InternalsList from '../components/InternalsList';
 import SessionReport from '../components/SessionReport';
-import StagePlaque from '../components/StagePlaque';
 import '../css/Session.css';
 
 /*
@@ -313,7 +312,6 @@ const  Session = () => {
     return(
         <>
             <SEO title={`Session`}/>
-            <StagePlaque stage={stage} />
             {/* app loaded, let's start */}
             <h1>
                 {stage < 21 &&

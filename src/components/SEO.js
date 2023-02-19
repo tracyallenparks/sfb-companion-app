@@ -2,9 +2,9 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 
 const SEO = ({
-        title=`Welcome`,
-        description=`Making a test site to check dexie out`,
-        name=`Test`,
+        title=`SFB Companion App`,
+        description=`Companion app for use with Star Fleet Battles`,
+        name=`SFB Companion App`,
         type=`article`
     }) => {
     return(
